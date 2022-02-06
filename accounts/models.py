@@ -5,6 +5,12 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
 class UserManager(BaseUserManager):
   def create_user(self, email, password, birth, phonenumber, nickname, name):
+    if not email:
+      raise ValueError('must have user email')
+    if not nickname:
+      raise ValueError('must have user nickname')
+    if not name:
+      raise ValueError('must have user name')
     user = self.model(
       email = self.normalize_email(email),
       name = name,
@@ -18,14 +24,7 @@ class UserManager(BaseUserManager):
     return user
 
   def create_superuser(self, email, password):
-    user = self.model(
-      email= self.normalize_email(email),
-      password = password,
-      nickname= "admin",
-      name="admin",
-      birth = "2022-01-01",
-      phonenumber = "99999999999",
-    )
+    user = self.create_user(email, password, "2000-01-01", "01000000000", nickname="admin", name="admin")
     user.is_admin = True
     user.save(using=self.db)
     return user
@@ -33,20 +32,20 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
   unique = models.AutoField(primary_key=True)
   email = models.EmailField(max_length=255, unique=True, verbose_name="이메일")
-  name = models.CharField(max_length=5, verbose_name="실명", default="")
-  nickname = models.CharField(max_length=15, verbose_name="닉네임", default="")
+  name = models.CharField(max_length=5, verbose_name="실명")
+  nickname = models.CharField(max_length=15, verbose_name="닉네임", unique=True)
   birth = models.DateField(verbose_name="생년월일")
   phonenumber = models.CharField(max_length=11, unique=True, verbose_name="휴대폰 번호")
   rate = models.DecimalField("평점", max_digits=3, decimal_places=2, default=0)
-  joindate = models.DateField(default=datetime.datetime.now, editable=False)
+  joindate = models.DateField(auto_now_add=True, editable=False)
   lastLogin = models.DateTimeField(default=datetime.datetime.now,)
   is_active = models.BooleanField(default=True)
   is_admin = models.BooleanField(default=False)
 
   objects = UserManager()
 
-  USERNAME_FIELD = "email"
-  REQUIRED_FIELD = ["email", "name", "nickname"]
+  USERNAME_FIELD = "nickname"
+  REQUIRED_FIELD = ["email", "name"]
 
   def __str__(self):
     return self.email
