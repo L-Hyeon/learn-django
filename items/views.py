@@ -7,7 +7,7 @@ def apply(request):
   if (request.method == "POST"):
     data = json.loads(request.body.decode('utf-8'))
     
-    user = Item.objects.create_item(
+    item = Item.objects.create_item(
       title = data["title"],
       category = data["category"],
       content = data["content"],

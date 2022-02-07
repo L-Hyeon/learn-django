@@ -1,6 +1,6 @@
 from django.db import models
 
-class ItemManager(models.Model):
+class ItemManager(models.Manager):
   def create_item(self, title, category, content, imageCnt, images, location):
     if not title:
       raise ValueError('must have title')
@@ -27,7 +27,7 @@ class ItemManager(models.Model):
     item.save()
     return item
 
-class Item():
+class Item(models.Model):
   unique = models.AutoField(primary_key=True)
   title = models.CharField(max_length=25, verbose_name="제목")
   category = models.IntegerField(verbose_name="카테고리")
