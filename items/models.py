@@ -1,7 +1,7 @@
 from django.db import models
 
 class ItemManager(models.Manager):
-  def create_item(self, title, category, content, imageCnt, images, location):
+  def create_item(self, title, category, content, cntImg, images, location):
     if not title:
       raise ValueError('must have title')
     if not category:
@@ -13,7 +13,7 @@ class ItemManager(models.Manager):
       category = category,
       content = content,
       location = location,
-      imageCnt = imageCnt,
+      cntImg = cntImg,
       image1 = images[0],
       image2 = images[1],
       image3 = images[2],
@@ -32,7 +32,7 @@ class Item(models.Model):
   title = models.CharField(max_length=25, verbose_name="제목")
   category = models.IntegerField(verbose_name="카테고리")
   content = models.TextField(verbose_name="상품설명")
-  imageCnt = models.IntegerField(verbose_name="이미지 수")
+  cntImg = models.IntegerField(verbose_name="이미지 수")
   image1 = models.TextField(verbose_name="이미지1")
   image2 = models.TextField(verbose_name="이미지2")
   image3 = models.TextField(verbose_name="이미지3")

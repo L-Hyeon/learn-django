@@ -12,7 +12,7 @@ def apply(request):
       category = data["category"],
       content = data["content"],
       location = data["location"],
-      imageCnt = data["imageCnt"],
+      cntImg = data["cntImg"],
       images = data["images"]
     )
     #return redirect('/')
