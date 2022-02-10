@@ -6,14 +6,17 @@ import json
 def apply(request):
   if (request.method == "POST"):
     data = json.loads(request.body.decode('utf-8'))
-    
+    loc = data["location"] + ' ' + data["detailLoc"]
     item = Item.objects.create_item(
       title = data["title"],
       category = data["category"],
       content = data["content"],
-      location = data["location"],
+      postcode = data["postcode"],
+      location = loc,
       cntImg = data["cntImg"],
-      images = data["images"]
+      images = data["images"],
+      price = data["price"],
+      pricePerHour = data["pricePerHour"],
     )
     #return redirect('/')
     return HttpResponse("OK")

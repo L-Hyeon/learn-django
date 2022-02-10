@@ -1,7 +1,7 @@
 from django.db import models
 
 class ItemManager(models.Manager):
-  def create_item(self, title, category, content, cntImg, images, location):
+  def create_item(self, title, category, content, cntImg, images, location, postcode, price, pricePerHour):
     if not title:
       raise ValueError('must have title')
     if not category:
@@ -13,6 +13,7 @@ class ItemManager(models.Manager):
       category = category,
       content = content,
       location = location,
+      postcode = postcode,
       cntImg = cntImg,
       image1 = images[0],
       image2 = images[1],
@@ -22,6 +23,8 @@ class ItemManager(models.Manager):
       image6 = images[5],
       image7 = images[6],
       image8 = images[7],
+      price = price,
+      pricePerHour = pricePerHour
     )
 
     item.save()
@@ -41,7 +44,10 @@ class Item(models.Model):
   image6 = models.TextField(verbose_name="이미지6")
   image7 = models.TextField(verbose_name="이미지7")
   image8 = models.TextField(verbose_name="이미지8")
-  location = models.CharField(max_length=255, verbose_name="위치")
+  location = models.CharField(max_length=255, verbose_name="위치", default="")
+  postcode = models.CharField(max_length=5, verbose_name="우편번호", default="")
+  price = models.IntegerField(verbose_name="가격", default=0)
+  pricePerHour = models.BooleanField(verbose_name="시간당 가격", default=True)
 
   objects = ItemManager()
 
