@@ -30,7 +30,7 @@ class UserManager(BaseUserManager):
     return user
 
 class User(AbstractBaseUser):
-  unique = models.AutoField(primary_key=True)
+  usernumber = models.AutoField(primary_key=True)
   email = models.EmailField(max_length=255, unique=True, verbose_name="이메일")
   name = models.CharField(max_length=5, verbose_name="실명")
   nickname = models.CharField(max_length=15, verbose_name="닉네임", unique=True)

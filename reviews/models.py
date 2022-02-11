@@ -25,7 +25,7 @@ class ReviewManager(models.Manager):
     return review
 
 class Review(models.Model):
-  unique = models.AutoField(primary_key=True)
+  reviewnumber = models.AutoField(primary_key=True)
   score = models.IntegerField(verbose_name="평점")
   content = models.TextField(verbose_name="리뷰내용")
   cntImg = models.IntegerField(verbose_name="이미지 수")

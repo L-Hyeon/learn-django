@@ -31,7 +31,7 @@ class ItemManager(models.Manager):
     return item
 
 class Item(models.Model):
-  unique = models.AutoField(primary_key=True)
+  itemnumber = models.AutoField(primary_key=True)
   title = models.CharField(max_length=25, verbose_name="제목")
   category = models.IntegerField(verbose_name="카테고리")
   content = models.TextField(verbose_name="상품설명")
